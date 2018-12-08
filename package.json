@@ -3,8 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/lodash": "^4.14.119",
+    "google-maps-react": "^2.0.2",
+    "lodash": "^4.17.11",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-input-box-done-typing": "^2.2.1",
+    "react-leaflet": "^2.1.2",
     "react-scripts": "2.1.1"
   },
   "scripts": {
