@@ -12,14 +12,16 @@ export default class FilterMap extends React.Component {
         }
         this.inputChanged.bind = this.inputChanged.bind(this);
         this.handleChange.bind = this.handleChange.bind(this);
+        this.inputReset.bind = this.inputReset.bind(this);
     }
 
-    inputChanged = () => {
+inputChanged = () => {
 
             this.props.filterPlaces(this.state.value);
 
-
-    
+}
+inputReset = () => {
+    this.props.inputReset();
 }
 handleChange = (event) => {
     this.setState({
@@ -45,7 +47,8 @@ handleChange = (event) => {
 
 
                 </form>
-                <button tabIndex='2' onClick={this.inputChanged}>Submit</button>
+                <button aria-label="Submit query" tabIndex='2' onClick={this.inputChanged}>Submit</button>
+                <button aria-label="Show all listings" tabIndex='4' onClick={this.inputReset}>Show all</button>
 
                 </div>
             </React.Fragment>
