@@ -4,7 +4,7 @@ const Markertest = (res, map) => {
     let markers = [];
     //console.log(res.rating);
 
-
+if(res !== undefined) {
 var icon = {
     url: "https://image.flaticon.com/icons/svg/93/93192.svg",
     animation: window.google.maps.Animation.DROP,
@@ -34,5 +34,6 @@ var icon = {
 
       return markers;
     }
+}
 
 export default Markertest;

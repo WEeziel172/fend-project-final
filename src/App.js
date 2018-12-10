@@ -36,20 +36,21 @@
   infowWindow = (markers) => {
     let contentString;
 
+    if(markers !== undefined) {
     markers.map((marker) => {
       var that = this;
       var request = new Request(`https://developers.zomato.com/api/v2.1/reviews?res_id=${marker.id}`, {
         method: 'GET', 
         mode: 'cors', 
         headers: new Headers({
-          "user-key": "ce6dd5bfddd45e53cb93fd298f11ebf7",
+          "user-key": "336d47190fd59c023b1c8b513de823ac",
         })
       });
     
       fetch(request).then((response) => {
         return response.json();
       })
-
+    
       .then((review) => {
         console.log(review);
         let all;
@@ -84,20 +85,20 @@
           return infowindow;     
       })
       .catch((error) => { 
-        console.log(error)
+        console.log("This error" + error)
       });
     return null;
     })
 
 
 
-
+  }
   }
 
   filterPlaces = (event) => {
     console.log(event);
 
-    if(event !== '') {
+    if(event !== '' && this.state.markers !== undefined) {
 
   this.state.markers.map((marker) => {
     marker.setMap(null)
@@ -114,7 +115,7 @@
       method: 'GET', 
       mode: 'cors', 
       headers: new Headers({
-        "user-key": "ce6dd5bfddd45e53cb93fd298f11ebf7",
+        "user-key": "336d47190fd59c023b1c8b513de823ac",
       })
     });
 
