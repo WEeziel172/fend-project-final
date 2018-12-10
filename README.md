@@ -15,6 +15,14 @@ Then, use 'npm start' to run the application locally.
 
 You will be shown a map of London with a selection of different restaurants. Clickin on a marker on the map will reveal the ratings and a review of the said restaurant. Clicking on the items list on left will narrow down the displayed markers on the map to the selected one.
 
+#npm run build
+Builds the app for production to the build folder.
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.
+
+Your app is ready to be deployed.
+
 ## Credits
 React team
 Zomato API for their wonderful api
