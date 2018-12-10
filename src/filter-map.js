@@ -31,20 +31,23 @@ handleChange = (event) => {
     render() {
         return (
             <React.Fragment>
+            <div className="innerform">
                 <form className="form-filter">
-                <div className="innerform">
+
                 <div className="title">
                     <img alt="logo" width="50px" height="50px" src="https://image.flaticon.com/icons/svg/123/123285.svg"></img>
                     <h2>Restaurant.Me</h2>
                 </div>
                 <div>
-                    <input value={this.state.value} onChange={this.handleChange} type="text"></input>
+                    <input aria-label="Search restaurants in London" tabIndex='1' value={this.state.value} onChange={this.handleChange} type="text"></input>
 
                 </div>
-                </div>
+
 
                 </form>
-                <button onClick={this.inputChanged} value="Submit">Submit</button>
+                <button tabIndex='2' onClick={this.inputChanged}>Submit</button>
+
+                </div>
             </React.Fragment>
         )
     }

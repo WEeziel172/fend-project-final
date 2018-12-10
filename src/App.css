@@ -17,10 +17,6 @@ html, body {
   height: 100vh;
 
 }
-.form-filter {
-  width: 20vh;
-  height: 10vh;
-}
 #map {
   
   height: 100vh;
@@ -74,5 +70,34 @@ padding: 0px;
   margin: 0px;
 }
 .filter > option {
+
+}
+.innerform {
+  display: flex;
+  flex-wrap: wrap;
+}
+@media only screen and (max-width: 360px) {
+  /* For mobile phones: */
+  .inner-nav {
+    padding: 0.5rem;
+    font-size: 10px;
+    width: 20%;
+
+  }
+  input {
+    width: 3rem;
+  }
+  button {
+    padding: 1px;
+    font-size: 10px;
+  }
+  .title {
+    font-size: 8px;
+    flex-wrap: wrap;
+  }
+  img {
+    width: 25px;
+    height: 25px;
+  }
 
 }

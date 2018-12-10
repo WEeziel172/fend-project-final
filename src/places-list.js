@@ -9,7 +9,7 @@ const PlacesList = ({res, onClickChange}) => {
             listItems = res.map((number) => 
             <li onClick={() => onClickChange(number)} key={number.restaurant.id}>{number.restaurant.name} </li>
             );
-            return (<ul className="placesList">{listItems}</ul>)
+            return (<ul aria-label="Restaurant List" tabIndex='3' className="placesList">{listItems}</ul>)
         }
 }
 export default PlacesList;

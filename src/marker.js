@@ -23,7 +23,7 @@ var icon = {
             title: results.restaurant.name,
             icon: icon,
             id: results.restaurant.R.res_id,
-            label: { color: 'gold', fontWeight: 'bold', fontSize: '14px', "text": results.restaurant.user_rating.aggregate_rating + "/5 Rating   " }
+            label: { color: 'red', fontWeight: 'bold', fontSize: '14px', "text": results.restaurant.user_rating.aggregate_rating + "/5 Rating   " }
           }
           )      
           markers = [...markers, marker];

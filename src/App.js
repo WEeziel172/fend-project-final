@@ -15,6 +15,7 @@ class App extends Component {
       markers: [],
       value: '',
       allLocations: [],
+      currentMarker: [],
     }
     this.onClickChange.bind = this.onClickChange.bind(this);
     this.filterPlaces.bind = this.filterPlaces.bind(this);
@@ -26,13 +27,14 @@ class App extends Component {
 
   }
 renderMap = () => {
-  loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCBXapyK98oJ5L-lydOYHhm8ItNOgvLhFI&libraries=places&callback=initMap")
+ loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCBXapyK98oJ5L-lydOYHhm8ItNOgvLhFI&libraries=places&callback=initMap")
   window.initMap = this.initMap
 }
 infowWindow = (markers) => {
   let contentString;
 
   markers.map((marker) => {
+    var that = this;
     var request = new Request(`https://developers.zomato.com/api/v2.1/reviews?res_id=${marker.id}`, {
       method: 'GET', 
       mode: 'cors', 
@@ -41,13 +43,12 @@ infowWindow = (markers) => {
       })
     });
   
-    fetch(request).then(function(response) {
+    fetch(request).then((response) => {
       return response.json();
     })
-    .catch(function(response) {
-      console.log("Error: " + response)
-    })
-    .then(function(review) {
+
+    .then((review) => {
+      console.log(review);
       let all;
       contentString = '<div id="content">'+
       '<div id="siteNotice">'+
@@ -62,12 +63,25 @@ infowWindow = (markers) => {
       '</div>';
     }).then(() => {
       let infowindow = new window.google.maps.InfoWindow({
-        content: contentString
+        content: contentString,
         });
+        
         marker.addListener('click', function() {
+          if(that.state.currentMarker.length !== 0)
+          {
+            that.state.currentMarker.close();
+
+          }
+
           infowindow.open(marker.map, marker);
+          that.setState({
+            currentMarker: infowindow,
+          })
         });   
         return infowindow;     
+    })
+    .catch((error) => { 
+      console.log(error)
     });
   return null;
   })
@@ -148,10 +162,13 @@ findPlaces = (results, status) => {
 onClickChange = (name) => {
   this.state.markers.map((marker) => {
     if(marker.id !== name.restaurant.R.res_id) {
-    marker.setMap(null);}
-  else if(marker.title === name.name) {
+      marker.setMap(null);}
+  else if(marker.title === name.restaurant.name) {
     marker.setMap(this.state.map);
-    marker.setAnimation(window.google.maps.Animation.BOUNCE);}
+    marker.setAnimation(window.google.maps.Animation.BOUNCE);
+    document.querySelector(`[title="${name.restaurant.name}"]`).click();
+  
+  }
     
     return null;
   })
@@ -164,11 +181,15 @@ initMap = () => {
 
   var map = new window.google.maps.Map(document.getElementById('map'), {
     center: {lat: 51.509865, lng: 0.118092}, 
-    zoom: 12
+    zoom: 11
   })
   this.setState({
     map: map,
   })
+  if (!window.google.maps) {
+    const heading = <h2>Error occured while loading map</h2>;
+    document.getElementById('map').appendChild(heading);
+  }
 
   var request = new Request("https://developers.zomato.com/api/v2.1/search?lat=51.509865&lon=0.118092&establishment_type=91", {
     method: 'GET', 
@@ -220,7 +241,7 @@ initMap = () => {
             <PlacesList onClickChange={this.onClickChange} res={this.state.allLocations}/>
 
           </div>
-          <div id="map">
+          <div aria-label="Map container" id="map">
 
           </div>
         </div>
