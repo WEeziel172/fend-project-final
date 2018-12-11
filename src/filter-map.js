@@ -47,7 +47,7 @@ handleChange = (event) => {
 
 
                 </form>
-                <button aria-label="Submit query" tabIndex='2' onClick={this.inputChanged}>Submit</button>
+                <button aria-label="Submit query" tabIndex='2' onClick={this.inputChanged}>Search</button>
                 <button aria-label="Show all listings" tabIndex='4' onClick={this.inputReset}>Show all</button>
 
                 </div>

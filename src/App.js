@@ -26,12 +26,16 @@
     
 
     componentDidMount() {
-      this.renderMap()
+      this.renderMap();
+
 
     }
   renderMap = () => {
-  loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCBXapyK98oJ5L-lydOYHhm8ItNOgvLhFI&libraries=places&callback=initMap")
+ let load = loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCBXapyK98oJ5L-lydOYHhm8ItNOgvLhFI&libraries=places&callback=initMap")
     window.initMap = this.initMap
+load.onerror = function() {
+  alert("Error occured while loading map, please try again");
+}
   }
   infowWindow = (markers) => {
     let contentString;
@@ -52,8 +56,8 @@
       })
     
       .then((review) => {
-        console.log(review);
         let all;
+
         contentString = '<div id="content">'+
         '<div id="siteNotice">'+
         '</div>'+
@@ -65,6 +69,7 @@
         </p>`+
         '</div>'+
         '</div>';
+        
       }).then(() => {
         let infowindow = new window.google.maps.InfoWindow({
           content: contentString,
@@ -85,6 +90,7 @@
           return infowindow;     
       })
       .catch((error) => { 
+        alert("There was an error loading markers. Please try again");
         console.log("This error" + error)
       });
     return null;
@@ -96,7 +102,7 @@
   }
 
   filterPlaces = (event) => {
-    console.log(event);
+    //console.log(event);
 
     if(event !== '' && this.state.markers !== undefined) {
 
@@ -164,25 +170,34 @@
   }
       
   onClickChange = (name) => {
+    let newMarker = [];
+
+
     this.state.markers.map((marker) => {
-      if(marker.id !== name.restaurant.R.res_id) {
-        marker.setMap(null);}
-    else if(marker.title === name.restaurant.name) {
-      marker.setMap(this.state.map);
-      marker.setAnimation(window.google.maps.Animation.BOUNCE);
-      document.querySelector(`[title="${name.restaurant.name}"]`).click();
-    
-    }
-      
-      return null;
+      marker.setAnimation(null);
+      marker.setMap(null);
     })
+    let found = this.state.markers.filter((marker) => {
+      
+      return marker.title === name.restaurant.name;
+    })
+    newMarker = found['0'];
+    found['0'].setMap(this.state.map);
+    found['0'].setAnimation(window.google.maps.Animation.BOUNCE);
+    //found.click();
+    window.google.maps.event.trigger(newMarker, 'click', {
+    });
+    //console.log(found['0']);
+
   }
   inputReset = () => {
     this.state.markers.map((marker) => {
-      console.log(marker);
+      //console.log(marker);
       marker.setMap(this.state.map);
       marker.setAnimation(null);
+      return null;
     })
+
   }
 
   initMap = () => {
@@ -212,6 +227,17 @@
     fetch(request).then(function(response) {
       return response.json();
     })
+    .then((response)=> {
+      //console.log(response)
+      if(response.code && response.status === '') {
+        alert(JSON.stringify(response));
+        return response;
+      }
+      else {
+        return response;
+      }
+
+    })
     .then(function(myJson) {
       allLocations = myJson.restaurants;
       //console.log(allLocations);
@@ -227,6 +253,10 @@
       })
       
       this.infowWindow(this.state.markers);
+    })
+    .catch((error) => { 
+      alert("There was an error loading markers. Please try again");
+      console.log("This error" + error)
     });
 
 
@@ -268,6 +298,7 @@
     script.src = url
     script.async = true
     script.defer = true
-    index.parentNode.insertBefore(script, index)
+    let test = index.parentNode.insertBefore(script, index)
+    return test;
   }
   export default App;

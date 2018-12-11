@@ -39,6 +39,7 @@ padding: 0px;
   padding-bottom: 1rem;
   margin-right: 2rem;
 }
+
 .placesList > li:hover {
   cursor: pointer;
   color: red;
@@ -76,7 +77,7 @@ padding: 0px;
   display: flex;
   flex-wrap: wrap;
 }
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 426px) {
   /* For mobile phones: */
   .inner-nav {
     padding: 0.5rem;
